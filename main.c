@@ -115,6 +115,10 @@ void test_moveNext() {
 
     TEST_ASSERT_EQUAL_PTR(mockList->head->next, it->curr);
 
+    moveItNext(it);
+
+    TEST_ASSERT_EQUAL_PTR(mockList->head->next->next, it->curr);
+
     destroyList(mockList);
     destroyIterator(it);
 }
@@ -144,10 +148,10 @@ void test_returnFour() {
     TEST_ASSERT_EQUAL_INT(4, returnFour());
 }*/
 
-void printListrec(Node *head) {
+void printList_rec(Node *head) {
     if (head != NULL) {
         printf("[%d]->", *(int *) head->data);
-        printListrec(head->next);
+        printList_rec(head->next);
 
     } else {
         printf(" EOL \n");
@@ -196,7 +200,7 @@ int main(void) {
 
     printf("head: %d -- tail %d -- length %d\n\n", *(int *) list->head->data, *(int *) list->tail->data, list->length);
 
-    printListrec(list->head);
+    printList_rec(list->head);
 
     //----------------TEST
 
@@ -232,7 +236,7 @@ int main(void) {
 
     // printf("curr %d", *(int *) it->curr->data);
 
-    printListrec(list->head);
+    printList_rec(list->head);
     //printList(list);
 
 
