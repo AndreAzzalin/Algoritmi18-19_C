@@ -1,21 +1,19 @@
-MAIN_SOURCE= main main.o list.o unity.o
+MAIN_SOURCE= test_list_lib test_list_lib.o list.o unity.o
 
-all: main  run
+all: test_list_lib  run
 
-main: main.o unity.o list.o
+test_list_lib: test_list_lib.o unity.o list.o
 	gcc -o $(MAIN_SOURCE)
 
-main.o : main.c list.h
-	gcc -c main.c
+test_list_lib.o : test_list_lib.c list.h
+	gcc -c test_list_lib.c
 
 list.o : list.c list.h
 	gcc -c list.c
 
-unitTest_list.o : ./test/unitTest_list.c ./test/unitTest_list.h lib.h
-	gcc -c ./test/unitTest_list.c
 
 unity.o: ./unity/unity.c ./unity/unity.h ./unity/unityinternals.h
 	gcc -c ./unity/unity.c
 
-run:main
-	./main
+run:test_list_lib
+	./test_list_lib

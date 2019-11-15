@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-#include "unity/unity.h"
+
 
 
 
@@ -16,57 +16,60 @@
  * elementi di una lista con riferiment del precedente e successore
  */
 typedef struct Node {
-    void *data;
-    struct Node *next, *prev;
+		void *data;
+		struct Node *next, *prev;
 } Node;
 
 /*
  * insieme di nodi con riferimento a testa, coda e numero di nodi
  */
 typedef struct List {
-    struct Node *head, *tail;
-    int length;
+		struct Node *head, *tail;
+		int length;
 } List;
 
 typedef struct Iterator {
-    struct List *list;
-    struct Node *curr;
-    int valid;
-    int pos;
+		struct List *list;
+		struct Node *curr;
+		int valid;
+		int pos;
 } Iterator;
 
 //il parametro list fa riferimento alla head della list
 
-Node *newNode(void *data);
+Node *new_node(void *data);
 
-List *newList();
+List *new_list();
 
-int isEmpty(List *list);
+int is_empty(List *list);
 
 Node *append(List *list, void *data);
 
-Node *insertNodePosition(List *list, void *data, int pos);
+Node *insert_node_position(List *list, void *data, int pos);
 
-Node *deleteLast(List *list);
+Node *delete_last(List *list);
 
-void deletePosition(List *list, int pos);
+void delete_position(List *list, int pos);
 
-Node *getNodePosition(Node *listHead, int pos);
+Node *get_node_position(Node *listHead, int pos);
 
-int getLenght(List *list);
+int get_lenght(List *list);
 
-void destroyList(List *list);
+void destroy_list(List *list);
 
 //----- FUNZIONI ITERATORE -------
 
-Iterator *newIterator(List *list);
+Iterator *new_iterator(List *list);
 
-int isValid(Iterator *it);
+void destroy_iterator(Iterator *it);
 
-Node *getCurrent(Iterator *it);
 
-void moveItNext(Iterator *it);
+int is_valid(Iterator *it);
 
-void destroyIterator(Iterator *it);
+Node *get_current(Iterator *it);
+
+void move_it_Next(Iterator *it);
+
+
 
 
