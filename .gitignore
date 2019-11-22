@@ -1,4 +1,9 @@
 # Project exclude paths
 /cmake-build-debug/
-/*.o
-test_list_lib
+
+#object files
+dynamic_list/*.o
+linked_list/*.o
+
+#eseguibili
+linked_list/test_linked_list

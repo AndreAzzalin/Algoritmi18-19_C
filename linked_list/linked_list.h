@@ -5,12 +5,9 @@
 #include <unistd.h>
 
 
+#define TRUE 1
+#define FALSE 0
 
-
-
-//errno impostato di default a 0 quando vi è un eccezione il SO assegna a quest avariabile il codice di errore
-#define TEST_ERROR(x)  if(errno){\
- printf("[%d] Errore %d (%s) -> %s\n",getpid(),errno, strerror(errno),x);};
 
 /*
  * elementi di una lista con riferiment del precedente e successore
@@ -35,7 +32,8 @@ typedef struct Iterator {
 		int pos;
 } Iterator;
 
-//il parametro list fa riferimento alla head della list
+//il parametro linked_list fa riferimento alla head della linked_list
+
 
 Node *new_node(void *data);
 
@@ -43,15 +41,20 @@ List *new_list();
 
 int is_empty(List *list);
 
-Node *append(List *list, void *data);
+/*
+ * @return TRUE if success FLASE else
+ */
+int append(List *list, void *data);
 
-Node *insert_node_position(List *list, void *data, int pos);
 
-Node *delete_last(List *list);
+int insert_data_position(List *list, void *data, int pos);
 
-void delete_position(List *list, int pos);
+//return last element updated
+int delete_last(List *list);
 
-Node *get_node_position(Node *listHead, int pos);
+int delete_position(List *list, int pos);
+
+void *get_data_position(List *list, int pos);
 
 int get_lenght(List *list);
 
@@ -66,7 +69,7 @@ void destroy_iterator(Iterator *it);
 
 int is_valid(Iterator *it);
 
-Node *get_current(Iterator *it);
+void *get_current(Iterator *it);
 
 void move_it_Next(Iterator *it);
 

@@ -1,8 +1,18 @@
+#include "linked_list.h"
 
-#include "list.h"
+/*====== UTILS ========*/
 
-#define TRUE 1
-#define FALSE 0
+Node *get_node_position(Node *listHead, int pos) {
+	if (pos == 0) {
+		return listHead;
+	} else {
+		return get_node_position(listHead->next, --pos);
+	}
+}
+
+/*===================== */
+
+
 
 Node *new_node(void *data) {
 	Node *newNode = (Node *) malloc(sizeof(Node));
@@ -30,7 +40,7 @@ int is_empty(List *list) {
 	}
 }
 
-Node *append(List *list, void *data) {
+int append(List *list, void *data) {
 	Node *new = NULL;
 
 	if (list != NULL) {
@@ -47,12 +57,14 @@ Node *append(List *list, void *data) {
 			list->tail = new;
 
 		}
+
+		return TRUE;
 	}
 
-	return new;
+	return FALSE;
 }
 
-Node *insert_node_position(List *list, void *data, int pos) {
+int insert_data_position(List *list, void *data, int pos) {
 
 	Node *new = NULL;
 
@@ -69,13 +81,14 @@ Node *insert_node_position(List *list, void *data, int pos) {
 			list->length++;
 		}
 			//tail
-		else if (pos >= list->length) {
+		else if (pos >= list->length - 1) {
 			append(list, data);
 
 		}
 			//body
 		else {
 			Node *tmp = get_node_position(list->head, pos);
+
 
 			tmp->prev->next = new;
 			new->prev = tmp->prev;
@@ -85,20 +98,20 @@ Node *insert_node_position(List *list, void *data, int pos) {
 
 			list->length++;
 		}
+		return TRUE;
 	}
-	return new;
+	return FALSE;
 }
 
-Node *delete_last(List *list) {
+//return last element updated
+int delete_last(List *list) {
 
-	if (list->length == 0) {
-		return NULL;
+	if (list->length < 1) {
+		return FALSE;
 	} else if (list->length == 1) {
 		Node *tmp = list->tail;
-
 		list->head = NULL;
 		list->tail = NULL;
-
 		free(tmp);
 	} else {
 		Node *tmp = list->tail;
@@ -108,10 +121,10 @@ Node *delete_last(List *list) {
 	}
 	list->length--;
 
-	return list->tail;
+	return TRUE;
 }
 
-void delete_position(List *list, int pos) {
+int delete_position(List *list, int pos) {
 
 	if (list != NULL) {
 		//head
@@ -143,16 +156,20 @@ void delete_position(List *list, int pos) {
 
 			list->length--;
 		}
+		return TRUE;
 	}
+
+	return FALSE;
 
 }
 
-Node *get_node_position(Node *listHead, int pos) {
-	if (pos == 0) {
-		return listHead;
-	} else {
-		get_node_position(listHead->next, --pos);
+void *get_data_position(List *list, int pos) {
+	Node *it = list->head;
+
+	for (int i = 0; i < pos; ++i) {
+		it = it->next;
 	}
+	return it->data;
 }
 
 int get_lenght(List *list) {
@@ -170,6 +187,7 @@ void destroy_list(List *list) {
 
 	free(list);
 }
+
 
 //----- FUNZIONI ITERATORE -------
 
@@ -191,8 +209,8 @@ int is_valid(Iterator *it) {
 	return it->valid;
 }
 
-Node *get_current(Iterator *it) {
-	return it->curr;
+void *get_current(Iterator *it) {
+	return it->curr->data;
 }
 
 void move_it_Next(Iterator *it) {

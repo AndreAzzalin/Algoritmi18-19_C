@@ -1,5 +1,5 @@
-#include "list.h"
-#include "unity/unity.h"
+#include "linked_list.h"
+#include "../unity/unity.h"
 
 List *set_mock_list() {
 	List *list = new_list();
@@ -7,6 +7,12 @@ List *set_mock_list() {
 	append(list, (void *) 2);
 	append(list, (void *) 3);
 	append(list, (void *) 4);
+	append(list, (void *) 5);
+	append(list, (void *) 6);
+	append(list, (void *) 7);
+	append(list, (void *) 8);
+	append(list, (void *) 9);
+	append(list, (void *) 10);
 	return list;
 }
 
@@ -16,7 +22,7 @@ List *set_mock_list_single_element() {
 	return list;
 }
 
-// test list----------------------------
+// test linked_list----------------------------
 
 void test_is_empty() {
 	List *mockList = set_mock_list_single_element();
@@ -27,77 +33,89 @@ void test_is_empty() {
 }
 
 void test_append() {
+
 	List *mockList = set_mock_list();
-	TEST_ASSERT_EQUAL_PTR(mockList->tail, append(mockList, (void *) 3));
+	append(mockList, (void *) 3);
+	TEST_ASSERT_EQUAL_INT(3, mockList->tail->data);
 	destroy_list(mockList);
 }
 
 void test_append_empty_list() {
 	List *emptyList = new_list();
-	Node *newNode = append(emptyList, (void *) 3);
-	TEST_ASSERT_EQUAL_PTR(emptyList->tail, newNode);
-	TEST_ASSERT_EQUAL_PTR(emptyList->head, newNode);
+	append(emptyList, (void *) 3);
+
+	TEST_ASSERT_EQUAL_INT(3, emptyList->tail->data);
+	TEST_ASSERT_EQUAL_INT(3, emptyList->head->data);
 
 	destroy_list(emptyList);
 }
 
 void test_insert_node_position_head() {
 	List *mockList = set_mock_list();
-	TEST_ASSERT_EQUAL_PTR(mockList->head, insert_node_position(mockList, (void *) 4, 0));
+	//insert element 4 to index 0
+	insert_data_position(mockList, (void *) 4, 0);
+	TEST_ASSERT_EQUAL_INT(4, mockList->head->data);
+
 	destroy_list(mockList);
 }
 
-//qualcosa non funziona come dovrebbe se faccio il test con gli indirizzi dei ponters ritorna false
 void test_insert_node_position_body() {
 	List *mockList = set_mock_list();
 
-	Node *newNode = insert_node_position(mockList, (void *) 4, 4);
-	Node *posNode = get_node_position(mockList->head, 4);
-	TEST_ASSERT_EQUAL_INT(newNode->data, newNode->data);
+	insert_data_position(mockList, (void *) 4, 4);
+
+	TEST_ASSERT_EQUAL_INT(4, get_data_position(mockList, 4));
 
 	destroy_list(mockList);
 }
 
 void test_delete_last_list_single_element() {
 	List *mockList = set_mock_list_single_element();
+	List *emptyList = new_list();
 
-	TEST_ASSERT_NULL(delete_last(mockList));
+
+	TEST_ASSERT_EQUAL_INT(TRUE, delete_last(mockList));
+	TEST_ASSERT_EQUAL_INT(FALSE, delete_last(emptyList));
+
 	destroy_list(mockList);
 }
 
 void test_deleteLast() {
 	List *mockList = set_mock_list();
+	delete_last(mockList);
 
-	TEST_ASSERT_EQUAL_PTR(mockList->tail, delete_last(mockList));
+	TEST_ASSERT_EQUAL_INT(9, mockList->tail->data);
 	destroy_list(mockList);
 }
 
 void test_delete_position_head() {
 	List *mockList = set_mock_list();
-	Node *newHeadMockList = mockList->head->next;
 
 	delete_position(mockList, 0);
-	TEST_ASSERT_EQUAL_PTR(newHeadMockList, mockList->head);
+	TEST_ASSERT_EQUAL_INT(2, mockList->head->data);
 	destroy_list(mockList);
 }
 
 void test_delete_position_body() {
+
 	List *mockList = set_mock_list();
-	delete_position(mockList, 4);
-	TEST_ASSERT_EQUAL_INT(3, mockList->length);
+	delete_position(mockList, 3);
+	TEST_ASSERT_EQUAL_INT(9, mockList->length);
 	destroy_list(mockList);
 }
 
-void test_get_node_position() {
+void test_get_data_position() {
 	List *mockList = set_mock_list();
-	TEST_ASSERT_EQUAL_PTR(mockList->head->next->next, get_node_position(mockList->head, 2));
+
+	TEST_ASSERT_EQUAL_INT(3, get_data_position(mockList, 2));
+
 	destroy_list(mockList);
 }
 
 void test_get_length() {
 	List *mockList = set_mock_list();
 
-	TEST_ASSERT_EQUAL_INT(4, get_lenght(mockList));
+	TEST_ASSERT_EQUAL_INT(10, get_lenght(mockList));
 	destroy_list(mockList);
 }
 
@@ -161,7 +179,7 @@ void printList_rec(Node *head) {
 
 
 void printList(List *l) {
-/* Print all the elements in the linked list */
+/* Print all the elements in the linked linked_list */
 	printf("PRINTLIST:\n");
 	Node *tmp = l->head;
 
@@ -181,7 +199,7 @@ void printList(List *l) {
 }
 
 
-int main(void) {
+int main() {
 
 	int array[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 	int array2[] = {1};
@@ -205,18 +223,18 @@ int main(void) {
 	//----------------TEST
 
 
-	//  int x = 45;
-	//insertNodePosition(list, &x, 2);
-	//append(list, &x);
-	// insertNodePosition(list, &x, 4);
-	//insertNodePosition(list, &x, 8);
-	//delete_last(list);
-	//destroy_list(list);
-	//deletePosition(list,0);
-	//printf("isEmpty? %s\n", isEmpty(list) ? "true" : "false");
+	// int x = 45;
+	//insert_data_position(list, &x, 4);
+	//append(linked_list, &x);
+	// insertNodePosition(linked_list, &x, 4);
+	//insertNodePosition(linked_list, &x, 8);
+	//delete_last(linked_list);
+	//destroy_list(linked_list);
+	//deletePosition(linked_list,0);
+	//printf("isEmpty? %s\n", isEmpty(linked_list) ? "true" : "false");
 
-	// Node *tmp = getNodePosition(list->head, 4);
-	//printf("getPosition 4 -> %d\n", *(int *) tmp->data);
+	// Node *tmp = getNodePosition(linked_list->head, 4);
+	printf("getPosition 9 -> %d\n", *(int *) get_data_position(list, 9));
 
 
 	//---------------------------------------
@@ -237,7 +255,6 @@ int main(void) {
 	// printf("curr %d", *(int *) it->curr->data);
 
 	printList_rec(list->head);
-	//printList(list);
 
 
 	printf("\n");
@@ -255,7 +272,7 @@ int main(void) {
 	RUN_TEST(test_delete_position_head);
 	RUN_TEST(test_delete_position_body);
 
-	RUN_TEST(test_get_node_position);
+	RUN_TEST(test_get_data_position);
 
 	RUN_TEST(test_get_length);
 
