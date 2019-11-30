@@ -8,34 +8,13 @@
 #define TRUE 1
 #define FALSE 0
 
+typedef struct _List List;
 
-/*
- * elementi di una lista con riferiment del precedente e successore
- */
-typedef struct Node {
-		void *data;
-		struct Node *next, *prev;
-} Node;
+typedef struct _Iterator Iterator;
 
-/*
- * insieme di nodi con riferimento a testa, coda e numero di nodi
- */
-typedef struct List {
-		struct Node *head, *tail;
-		int length;
-} List;
-
-typedef struct Iterator {
-		struct List *list;
-		struct Node *curr;
-		int valid;
-		int pos;
-} Iterator;
 
 //il parametro linked_list fa riferimento alla head della linked_list
 
-
-Node *new_node(void *data);
 
 List *new_list();
 

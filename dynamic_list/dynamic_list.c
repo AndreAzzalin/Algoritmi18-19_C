@@ -1,5 +1,19 @@
-#include "dynamic_list.h"
+#include "../list.h"
 
+
+
+
+ struct _Iterator {
+		List *list;
+		void *curr;
+		int pos;
+} ;
+
+struct _List {
+		void **array;
+		size_t length; //lenght array
+		size_t count_slot; //slot occupati dell'array
+};
 
 
 
@@ -138,10 +152,8 @@ void reduce(List *list) {
 Iterator *new_iterator(List *list) {
 	Iterator *it = (Iterator *) malloc(sizeof(Iterator));
 	it->list = list;
-	it->pos = 0;
-	it->curr = list->array[0];
-
 	return it;
+
 }
 
 
@@ -156,7 +168,7 @@ void *get_current(Iterator *it) {
 	return it->curr;
 }
 
-void move_it_Next(Iterator *it) {
+void move_it_next(Iterator *it) {
 	if (it->pos < it->list->count_slot) {
 		it->pos++;
 		it->curr = it->list->array[it->pos];

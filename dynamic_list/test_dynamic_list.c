@@ -1,28 +1,5 @@
-#include "dynamic_list.h"
+#include "../list.h"
 #include "../unity/unity.h"
-
-
-void printList(List *list) {
-
-	void *ind = 0;
-	void *val;
-	size_t size = list->length;
-	printf("COUNT %zu\n", list->count_slot);
-
-	for (int i = 0; i < list->length; ++i) {
-		ind = list->array[i];
-		if (ind != NULL) {
-			val = ind;
-			printf("index %d indirizzo: [%p] valore [%d]\n", i, ind, *(int *) val);
-
-		} else
-			printf("index %d indirizzo: [%p] valore [empty]\n", i, ind);
-
-	}
-
-
-	printf("\n");
-}
 
 
 List *set_mock_list() {
@@ -53,7 +30,8 @@ void test_append() {
 	List *mockList = set_mock_list_single_element();
 	int x = -1;
 	append(mockList, &x);
-	TEST_ASSERT_EQUAL_INT(-1, *(int *) get_data_position(mockList, mockList->count_slot - 1));
+
+	TEST_ASSERT_EQUAL_INT(-1, *(int *) get_data_position(mockList, get_count_slot(mockList) - 1));
 	destroy_list(mockList);
 
 }
@@ -78,9 +56,11 @@ void test_delete_last() {
 
 void test_delete_data_position() {
 	List *mockList = set_mock_list();
-	int *old = mockList->array[5];
+
+
+	int *old = 	get_data_position(mockList,5);
 	delete_data_position(mockList, 4);
-	TEST_ASSERT_EQUAL_PTR(old, mockList->array[4]);
+	TEST_ASSERT_EQUAL_PTR(old, 	get_data_position(mockList,4));
 	destroy_list(mockList);
 }
 
@@ -129,12 +109,9 @@ void test_move_next() {
 	Iterator *it = new_iterator(mockList);
 
 
-	TEST_ASSERT_EQUAL_PTR(mockList->array[0], it->curr);
-
-	move_it_Next(it);
-
-	TEST_ASSERT_EQUAL_PTR(get_data_position(mockList, 1), it->curr);
-
+	TEST_ASSERT_EQUAL_PTR(get_data_position(mockList, 0), get_current(it));
+	move_it_next(it);
+	TEST_ASSERT_EQUAL_PTR(get_data_position(mockList, 1), get_current(it));
 	destroy_list(mockList);
 	destroy_iterator(it);
 }
@@ -145,7 +122,7 @@ void test_is_valid() {
 
 	TEST_ASSERT_TRUE(is_valid(it))
 
-	move_it_Next(it);
+	move_it_next(it);
 
 	TEST_ASSERT_FALSE(is_valid(it))
 
@@ -154,33 +131,7 @@ void test_is_valid() {
 
 int main() {
 
-	int array[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-	List *list = new_list();
 
-	for (int i = 0; i < 10; ++i) {
-		append(list, &array[i]);
-	}
-
-
-	//printList(list);
-	int x = -1;
-	//append(list, &x);
-
-	delete_data_position(list, 4);
-
-//	printf("valore pos 3 [%d]\n", *(int *) list->array[3]);
-//	printf("valore pos 3 [%d]\n", *(int *) get_data_position(list, 3));
-
-
-	//printf("%d\n\n", list->array[list->count_slot - 1]);
-//	printf("%d\n\n", *(int *) list->array[4]);
-	//insert_elem_position(list, &x, 0);
-	//delete_last(list);
-	//delete_position(list,9);
-
-//	printf("\n");
-
-//	printList(list);
 	UNITY_BEGIN();
 
 	RUN_TEST(test_is_empty);

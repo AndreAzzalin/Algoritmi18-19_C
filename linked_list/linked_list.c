@@ -1,5 +1,30 @@
 #include "linked_list.h"
 
+
+/*
+ * elementi di una lista con riferiment del precedente e successore
+ */
+typedef struct Node {
+		void *data;
+		struct Node *next, *prev;
+} Node;
+
+/*
+ * insieme di nodi con riferimento a testa, coda e numero di nodi
+ */
+struct _List {
+		Node *head, *tail;
+		int length;
+};
+
+struct _Iterator {
+		List *list;
+		Node *curr;
+		int valid;
+		int pos;
+};
+
+
 /*====== UTILS ========*/
 
 Node *get_node_position(Node *listHead, int pos) {
@@ -128,10 +153,10 @@ int delete_data_position(List *list, int pos) {
 
 	if (list != NULL) {
 		//head
-		if (pos <= 0) {
+		if (pos == 0) {
 			Node *tmp = list->head;
 
-			list->head = list->head->next;
+			list->head = tmp->next;
 			list->head->prev = NULL;
 
 			list->length--;
@@ -193,6 +218,7 @@ void destroy_list(List *list) {
 
 Iterator *new_iterator(List *list) {
 	Iterator *it = (Iterator *) malloc(sizeof(Iterator));
+
 	it->list = list;
 	it->curr = list->head;
 	it->pos = 0;
@@ -213,7 +239,7 @@ void *get_current(Iterator *it) {
 	return it->curr->data;
 }
 
-void move_it_Next(Iterator *it) {
+void move_it_next(Iterator *it) {
 	if (it->curr->next != NULL) {
 		it->curr = it->curr->next;
 	} else {
