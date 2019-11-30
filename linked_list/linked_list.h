@@ -41,18 +41,15 @@ List *new_list();
 
 int is_empty(List *list);
 
-/*
- * @return TRUE if success FLASE else
- */
-int append(List *list, void *data);
 
+int append(List *list, void *data);
 
 int insert_data_position(List *list, void *data, int pos);
 
 //return last element updated
 int delete_last(List *list);
 
-int delete_position(List *list, int pos);
+int delete_data_position(List *list, int pos);
 
 void *get_data_position(List *list, int pos);
 
@@ -65,7 +62,6 @@ void destroy_list(List *list);
 Iterator *new_iterator(List *list);
 
 void destroy_iterator(Iterator *it);
-
 
 int is_valid(Iterator *it);
 

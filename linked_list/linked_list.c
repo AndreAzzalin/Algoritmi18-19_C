@@ -124,7 +124,7 @@ int delete_last(List *list) {
 	return TRUE;
 }
 
-int delete_position(List *list, int pos) {
+int delete_data_position(List *list, int pos) {
 
 	if (list != NULL) {
 		//head

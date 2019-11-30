@@ -50,7 +50,7 @@ void test_append_empty_list() {
 	destroy_list(emptyList);
 }
 
-void test_insert_node_position_head() {
+void test_insert_data_position_head() {
 	List *mockList = set_mock_list();
 	//insert element 4 to index 0
 	insert_data_position(mockList, (void *) 4, 0);
@@ -59,7 +59,7 @@ void test_insert_node_position_head() {
 	destroy_list(mockList);
 }
 
-void test_insert_node_position_body() {
+void test_insert_data_position_body() {
 	List *mockList = set_mock_list();
 
 	insert_data_position(mockList, (void *) 4, 4);
@@ -88,18 +88,18 @@ void test_deleteLast() {
 	destroy_list(mockList);
 }
 
-void test_delete_position_head() {
+void test_delete_data_position_head() {
 	List *mockList = set_mock_list();
 
-	delete_position(mockList, 0);
+	delete_data_position(mockList, 0);
 	TEST_ASSERT_EQUAL_INT(2, mockList->head->data);
 	destroy_list(mockList);
 }
 
-void test_delete_position_body() {
+void test_delete_data_position_body() {
 
 	List *mockList = set_mock_list();
-	delete_position(mockList, 3);
+	delete_data_position(mockList, 3);
 	TEST_ASSERT_EQUAL_INT(9, mockList->length);
 	destroy_list(mockList);
 }
@@ -263,14 +263,14 @@ int main() {
 	RUN_TEST(test_append);
 	RUN_TEST(test_append_empty_list);
 
-	RUN_TEST(test_insert_node_position_head);
-	RUN_TEST(test_insert_node_position_body);
+	RUN_TEST(test_insert_data_position_head);
+	RUN_TEST(test_insert_data_position_body);
 
 	RUN_TEST(test_deleteLast);
 	RUN_TEST(test_delete_last_list_single_element);
 
-	RUN_TEST(test_delete_position_head);
-	RUN_TEST(test_delete_position_body);
+	RUN_TEST(test_delete_data_position_head);
+	RUN_TEST(test_delete_data_position_body);
 
 	RUN_TEST(test_get_data_position);
 

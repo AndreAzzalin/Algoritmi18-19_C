@@ -9,7 +9,11 @@
 #define FALSE 0
 
 
-//gli elementi sono inseriti per ogni slot dell'array
+/*typedef struct List List;
+typedef struct Iterator Iterator;
+*/
+
+//gli indirizzi degli elementi sono inseriti per ogni slot dell'array
 typedef struct List {
 		void **array;
 		size_t length; //lenght array
@@ -19,32 +23,27 @@ typedef struct List {
 
 typedef struct Iterator {
 		List *list;
-		int current;
+		void *curr;
+		int pos;
 } Iterator;
 
 
-/*=========COMMON=========*/
 int is_empty(List *list);
 
 void destroy_list(List *list);
 
-void destroy_iterator(Iterator *it);
-
-/*========================*/
-
-
 List *new_list();
 
-void *append(List *list, void *data);
+int append(List *list, void *data);
 
-void *insert_elem_position(List *list, void *data, int pos);
+int insert_data_position(List *list, void *data, int pos);
 
-int *delete_last(List *list);
+int delete_last(List *list);
 
-void delete_position(List *list, int pos);
+int delete_data_position(List *list, int pos);
 
 //return value elem position pos
-void *get_elem_position(List *list, int pos);
+void *get_data_position(List *list, int pos);
 
 int get_lenght(List *list);
 
@@ -54,14 +53,6 @@ void extend(List *list);
 
 void reduce(List *list);
 
-void shift_r(List *list, int pos);
-
-void shift_l(List *list, int pos);
-
-
-
-
-
 
 
 
@@ -70,9 +61,12 @@ void shift_l(List *list, int pos);
 
 Iterator *new_iterator(List *list);
 
+void destroy_iterator(Iterator *it);
 
 int is_valid(Iterator *it);
 
-void* get_current(Iterator *it);
+void *get_current(Iterator *it);
 
 void move_it_Next(Iterator *it);
+
+
