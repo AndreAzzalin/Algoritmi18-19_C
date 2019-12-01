@@ -96,7 +96,7 @@ void test_delete_data_position_body() {
 
 	List *mockList = set_mock_list();
 	delete_data_position(mockList, 3);
-	TEST_ASSERT_EQUAL_INT(9, get_lenght(mockList));
+	TEST_ASSERT_EQUAL_INT(9, get_length(mockList));
 	destroy_list(mockList);
 }
 
@@ -111,7 +111,7 @@ void test_get_data_position() {
 void test_get_length() {
 	List *mockList = set_mock_list();
 
-	TEST_ASSERT_EQUAL_INT(10, get_lenght(mockList));
+	TEST_ASSERT_EQUAL_INT(10, get_length(mockList));
 	destroy_list(mockList);
 }
 
@@ -143,33 +143,37 @@ void test_is_valid() {
 
 	TEST_ASSERT_FALSE(is_valid(it))
 
-	//TEST_ASSERT_FALSE(isValid(it))
-
 	destroy_list(mockList);
 	destroy_iterator(it);
 
 }
 
-void printList(List *l) {
+void test_merge() {
 
-	printf("PRINTLIST:\n");
-	Node *tmp = get_data_position(l, 0);
+	List *mock_l1 = new_list();
+	List *mock_l2 = new_list();
 
-	if (get_data_position(l, 0) == NULL) {    // myList->top == NULL || myList->size == 0
-		printf("The List is Empty!\n");
-		return;
+	int a[] = {1, 2, 3};
+	int b[] = {4, 5, 6};
+
+	for (int i = 0; i < 3; ++i) {
+		append(mock_l1, &a[i]);
+		append(mock_l2, &b[i]);
 	}
 
-	Iterator *it = new_iterator(l);
+	List *merged_list = merge(mock_l1, mock_l2, INCREASING);
 
-	while (is_valid(it)) {
-		printf("%d ", *(int *) get_current(it));
-		if (get_current(it) != NULL)
-			printf("-> ");
-		move_it_next(it);
+	print_int_list(mock_l1);
+	print_int_list(mock_l2);
+	print_int_list(merged_list);
+
+	int i = 0;
+	int j = 3;
+	while (i < 3 && j < 6) {
+		TEST_ASSERT_EQUAL_INT(*(int *) get_data_position(mock_l1, i), *(int *) get_data_position(merged_list, i));
+		TEST_ASSERT_EQUAL_INT(get_data_position(mock_l2, i), get_data_position(merged_list, j));
+		i++, j++;
 	}
-	printf("\n");
-
 }
 
 

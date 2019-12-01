@@ -1,4 +1,4 @@
-#include "linked_list.h"
+#include "../list.h"
 
 
 /*
@@ -80,12 +80,9 @@ int append(List *list, void *data) {
 			list->tail->next = new;
 			new->prev = list->tail;
 			list->tail = new;
-
 		}
-
 		return TRUE;
 	}
-
 	return FALSE;
 }
 
@@ -197,7 +194,7 @@ void *get_data_position(List *list, int pos) {
 	return it->data;
 }
 
-int get_lenght(List *list) {
+int get_length(List *list) {
 	return list->length;
 }
 
