@@ -7,3 +7,4 @@ linked_list/*.o
 
 #eseguibili
 linked_list/test_linked_list
+dynamic_list/test_dynamic_list

@@ -17,7 +17,7 @@ List *set_mock_list_single_element() {
 	return list;
 }
 
-// test linked_list----------------------------
+
 
 void test_is_empty() {
 	List *mockList = set_mock_list_single_element();
