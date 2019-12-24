@@ -10,6 +10,12 @@
 #define INCREASING 2
 #define DECREASING 3
 
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 
 //element addresses stored foreach list slot
 typedef struct _List List;
@@ -24,16 +30,28 @@ void destroy_list(List *list);
 //return new list
 List *new_list();
 
-//add new element at the end of the list
+/*
+ * add new element at the end of the list
+ * return TRUE(1) if operation successful, FALSE(0) if not
+*/
 int append(List *list, void *data);
 
-//add new element at position pos of the list
+/*
+ * add new element at position pos of the list
+ * return TRUE(1) if operation successful, FALSE(0) if not
+ */
 int insert_data_position(List *list, void *data, int pos);
 
-//delete last element from the list
+/*
+ * delete last element from the list
+ * return TRUE(1) if operation successful, FALSE(0) if not
+ */
 int delete_last(List *list);
 
-//delete element at position pos from list
+/*
+ * delete element at position pos from list
+ * return TRUE(1) if operation successful, FALSE(0) if not
+ */
 int delete_data_position(List *list, int pos);
 
 //return element at position pos from list

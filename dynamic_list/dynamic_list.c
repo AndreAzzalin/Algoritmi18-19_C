@@ -42,7 +42,7 @@ void shift_backward(List *list, int pos) {
         list->array[i] = list->array[i + 1];
 }
 
-//---------------------------------------------
+//-----------------
 
 
 void destroy_list(List *list) {
@@ -115,7 +115,6 @@ int get_count_slot(List *list) {
     return list->count_slot;
 }
 
-
 int append(List *list, void *data) {
     if (list) {
 
@@ -169,11 +168,11 @@ void *get_current(Iterator *it) {
 
 void move_it_next(Iterator *it) {
     if (it->pos < it->list->length) {
-        it->pos++;
+
+        it->pos = it->pos+1;
         it->curr = it->list->array[it->pos];
     }
 }
-
 
 void destroy_iterator(Iterator *it) {
     free(it);
